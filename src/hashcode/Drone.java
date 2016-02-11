@@ -26,45 +26,21 @@ public class Drone {
 	public void setPosition(Coordonnees position) {
 		this.position = position;
 	}
-
-
-
-
 	public int getCharge() {
 		return charge;
 	}
-
-
-
-
 	public void setCharge(int charge) {
 		this.charge = charge;
 	}
-
-
-
-
 	public Coordonnees getDestination() {
 		return destination;
 	}
-
-
-
-
 	public void setDestination(Coordonnees destination) {
 		this.destination = destination;
 	}
-
-
-
-
 	public int getTempsRestant() {
 		return tempsRestant;
 	}
-
-
-
-
 	public void setTempsRestant(int tempsRestant) {
 		this.tempsRestant = tempsRestant;
 	}
