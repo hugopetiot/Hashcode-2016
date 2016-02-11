@@ -6,6 +6,7 @@ import java.util.Iterator;
 public class Entrepot extends Emplacement {
 	private ArrayList<Produit> produits_disponibles;
 	private int id;
+	private ArrayList<Commande> commande_honorable;
 	public Entrepot(int x, int y,int i){
 		produits_disponibles=new ArrayList<Produit>();
 		location=new Coordonnees(x,y);
@@ -17,7 +18,10 @@ public class Entrepot extends Emplacement {
 	public void setProduits_disponibles(ArrayList<Produit> produits_disponibles) {
 		this.produits_disponibles = produits_disponibles;
 	}
-
+	
+	public void setup_entrepot(ArrayList<Commande> l){
+		commande_honorable=honorable(l);
+	}
 	public boolean stockDisponible(Commande c){
 		boolean trouve;
 
