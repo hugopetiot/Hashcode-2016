@@ -27,7 +27,11 @@ public class Main {
 			int nbcom=0;
 			int rows=in.nextInt(),columns=in.nextInt(),drones=in.nextInt(),turns=in.nextInt(),maxPayload=in.nextInt();
 			
+			int nbProduits = in.nextInt();
 			
+			for(int i = 0; i<nbProduits; i++){
+				
+			}
 			
 
 
