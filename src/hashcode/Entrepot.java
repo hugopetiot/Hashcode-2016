@@ -1,6 +1,7 @@
 package hashcode;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Entrepot extends Emplacement {
 	private ArrayList<Produit> produits_disponibles;
@@ -22,15 +23,19 @@ public class Entrepot extends Emplacement {
 		ArrayList<Produit>tmp=(ArrayList<Produit>) produits_disponibles.clone();
 		for(Produit demande : c.getProduits()){ 
 			trouve=false;
-			for(Produit dispo : tmp){
-				if(demande.getId()==dispo.getId()&&(trouve==false)){
+			Iterator<Produit> it=tmp.iterator();
+			while(it.hasNext()){
+				Produit dispo=it.next();
+				if(demande.getId()==dispo.getId()){
 					tmp.remove(dispo);
 					trouve=true;
+					break;
 				}				
 			}
 			if(trouve==false)
 				return false;
-		}
+			}
+		
 		return true;
 	}
 	
