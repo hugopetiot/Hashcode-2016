@@ -70,6 +70,10 @@ public class Main {
 				lcommandes.add(ordertmp);
 			}
 			
+			for(Commande c : lcommandes){
+				System.out.println(c.poidstotal());
+			}
+			
 			//System.out.println("carre "+sq.getScore());
 			//System.out.println("# "+dessin.getHashtag());
 			//System.out.println(dessin.toString());

@@ -48,6 +48,7 @@ public class Drone {
 	}
 
 	public ArrayList<Commande> minimum(ArrayList<Commande> commande){
+		@SuppressWarnings("unchecked")
 		ArrayList<Commande> l=(ArrayList<Commande>) commande.clone();
 		int min[]=new int[l.size()];
 		int i=0;
