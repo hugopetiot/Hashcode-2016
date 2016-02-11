@@ -16,11 +16,14 @@ public class Main {
 
 		try {
 			String rendu="";
-			FileWriter fw= new FileWriter(new File("logo.txt"));
+			FileWriter fw= new FileWriter(new File("mother_of_all_warehouses.txt"));
+			//FileWriter fw= new FileWriter(new File("redundancy.txt"));
+			//FileWriter fw= new FileWriter(new File("busy_day.txt"));
 			Locale.setDefault(Locale.ENGLISH);
 			int nbcom=0;
-			//Dessin dessin = new Dessin(new File("learn_and_teach.in"));
-			//Dessin dessin = new Dessin(new File("right_angle.in"));
+			//Dessin dessin = new Dessin(new File("mother_of_all_warehouses.in"));
+			//Dessin dessin = new Dessin(new File("redundancy.in"));
+			//Dessin dessin = new Dessin(new File("busy_day.in"));
 
 
 
