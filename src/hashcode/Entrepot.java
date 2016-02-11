@@ -14,6 +14,64 @@ public class Entrepot extends Emplacement {
 	public void setProduits_disponibles(ArrayList<Produit> produits_disponibles) {
 		this.produits_disponibles = produits_disponibles;
 	}
+	
+	public boolean stockDisponible(Commande c){
+		boolean trouve;
+
+		
+		ArrayList<Produit>tmp=(ArrayList<Produit>) produits_disponibles.clone();
+		for(Produit demande : c.getProduits()){ 
+			trouve=false;
+			for(Produit dispo : tmp){
+				if(demande.getId()==dispo.getId()&&(trouve==false)){
+					tmp.remove(dispo);
+					trouve=true;
+				}				
+			}
+			if(trouve==false)
+				return false;
+		}
+		return true;
+	}
+	
+	public ArrayList<Commande> honorable(ArrayList<Commande> commandes){
+		ArrayList<Commande> ret=new ArrayList<Commande>();
+		for(Commande c : commandes){
+			if(stockDisponible(c)){
+				ret.add(c);				
+			}
+		}
+		return minimum(ret);
+		
+		
+	}
+	
+	
+	public ArrayList<Commande> minimum(ArrayList<Commande> commande){
+		ArrayList<Commande> l=(ArrayList<Commande>) commande.clone();
+		int min[]=new int[l.size()];
+		int i=0;
+		for(Commande c: l ){
+			min[i]=location.distance(c.getLocation())*c.poidstotal();
+			
+
+			
+		}
+		int max=l.size();
+		int j;
+		ArrayList<Commande> classement=new ArrayList<Commande>();
+		int cpt[]=new int[max];
+		for (i=1; i<max; i++){
+		      for (j=0; j<i; j++){
+		    	  if(min[i]>=min[j])
+		    		  cpt[i]++;
+		    	  else
+		    		  cpt[j]++;
+		      }
+		    }
+		    for (i=0; i<max; i++) classement.add(l.get(i));
+		return classement;
+	}
 
 	
 }
