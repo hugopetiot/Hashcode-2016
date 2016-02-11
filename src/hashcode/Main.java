@@ -3,6 +3,7 @@ package hashcode;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -13,7 +14,7 @@ public class Main {
 
 	public static void main(String args[]){
 		long cdeb = System.currentTimeMillis();
-
+		ArrayList<Produit> lprods;
 		try {
 			String rendu="";
 			FileWriter fw= new FileWriter(new File("mother_of_all_warehouses.txt"));
