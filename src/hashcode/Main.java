@@ -70,8 +70,8 @@ public class Main {
 				lcommandes.add(ordertmp);
 			}
 			
-			for(Commande c : lcommandes){
-				System.out.println(c.poidstotal());
+			for(Entrepot e : lwarehouses){
+				System.out.println(e.);
 			}
 			
 			//System.out.println("carre "+sq.getScore());
