@@ -41,7 +41,7 @@ public class Main {
 			lwarehouses = new ArrayList<Entrepot> (nbWarehouses);
 			
 			for(int i = 0; i<nbWarehouses; i++){
-				Entrepot tmp = new Entrepot(in.nextInt(),in.nextInt());
+				Entrepot tmp = new Entrepot(in.nextInt(),in.nextInt(),i);
 				ArrayList<Produit> l = tmp.getProduits_disponibles();
 				for(int j = 0; j<nbProduits; j++){
 					int t = in.nextInt();
@@ -62,7 +62,7 @@ public class Main {
 			int nborders = in.nextInt();
 			lcommandes = new ArrayList<Commande>(nborders);
 			for(int i = 0; i <nborders; i++){
-				Commande ordertmp = new Commande(in.nextInt(),in.nextInt());
+				Commande ordertmp = new Commande(in.nextInt(),in.nextInt(),i);
 				int nbitems = in.nextInt();
 				for(int j = 0; j<nbitems; j++){
 					ordertmp.getProduits().add(lprods.get(in.nextInt()));

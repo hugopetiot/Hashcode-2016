@@ -4,10 +4,11 @@ import java.util.ArrayList;
 
 public class Commande extends Emplacement {
 	private ArrayList<Produit> produits;
-
-	public Commande(int x, int y){
+	int id;
+	public Commande(int x, int y,int i){
 		produits= new ArrayList<Produit>();
 		location=new Coordonnees(x,y);
+		id=i;
 	}
 	public ArrayList<Produit> getProduits() {
 		return produits;

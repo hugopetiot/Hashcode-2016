@@ -5,9 +5,11 @@ import java.util.Iterator;
 
 public class Entrepot extends Emplacement {
 	private ArrayList<Produit> produits_disponibles;
-	public Entrepot(int x, int y){
+	private int id;
+	public Entrepot(int x, int y,int i){
 		produits_disponibles=new ArrayList<Produit>();
 		location=new Coordonnees(x,y);
+		id=i;
 	}
 	public ArrayList<Produit> getProduits_disponibles() {
 		return produits_disponibles;
@@ -59,7 +61,7 @@ public class Entrepot extends Emplacement {
 		int i=0;
 		for(Commande c: l ){
 			min[i]=location.distance(c.getLocation())*c.poidstotal();
-			
+			i++;
 
 			
 		}
