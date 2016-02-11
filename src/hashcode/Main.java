@@ -20,12 +20,12 @@ public class Main {
 		ArrayList<Commande> lcommandes;
 		try {
 			String rendu="";
-			FileWriter fw= new FileWriter(new File("mother_of_all_warehouses.txt"));
-			//FileWriter fw= new FileWriter(new File("redundancy.txt"));
+			//FileWriter fw= new FileWriter(new File("mother_of_all_warehouses.txt"));
+			FileWriter fw= new FileWriter(new File("redundancy.txt"));
 			//FileWriter fw= new FileWriter(new File("busy_day.txt"));
 			Locale.setDefault(Locale.ENGLISH);
-			in = new Scanner(new File("mother_of_all_warehouses.in"));
-			//in = new Scanner(new File("redundancy.in"));
+			//in = new Scanner(new File("mother_of_all_warehouses.in"));
+			in = new Scanner(new File("redundancy.in"));
 			//in = new Scanner(new File("mbusy_day.in"));
 
 			int nbcom=0;
@@ -56,7 +56,7 @@ public class Main {
 			
 			ldrones = new ArrayList<Drone>(drones);
 			for(int i=0; i<drones; i++){
-				ldrones.add(new Drone(maxPayload, lwarehouses.get(0).getLocation()));
+				ldrones.add(new Drone(maxPayload, lwarehouses.get(0).getLocation(), i));
 			}
 
 			int nborders = in.nextInt();
@@ -73,17 +73,18 @@ public class Main {
 			for(Entrepot e : lwarehouses){
 				ArrayList<Commande> l = e.honorable(lcommandes);
 				for(Commande c : l){
-					System.out.println(c.getLocation().x +"   "+c.getLocation().y);
+					System.out.println(c.getLocation().x +"   "+c.getLocation().y+"    "+c.poidstotal()*e.getLocation().distance(c.getLocation())+"");
+					fw.write(c.getLocation().x +"   "+c.getLocation().y+"    "+c.poidstotal()*e.getLocation().distance(c.getLocation())+"\n");
+				
 				}
-				System.out.println("\n");
+				fw.write("\n\n");
 			}
 			
 			//System.out.println("carre "+sq.getScore());
 			//System.out.println("# "+dessin.getHashtag());
 			//System.out.println(dessin.toString());
-			System.out.println(nbcom);
-			fw.write(nbcom+"\n");
-			fw.write(rendu);
+			//fw.write(nbcom+"\n");
+			//fw.write(rendu);
 			//	fw.write(dessin.toString());
 			fw.close();
 		} catch (IOException e) {

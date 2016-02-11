@@ -6,16 +6,28 @@ public class Drone {
 	private int capaciteMax, charge;
 	private Coordonnees position, destination;
 	private int tempsRestant;
+	private int id;
 	
-	public Drone(int capa, Coordonnees posInit){
+	public Drone(int capa, Coordonnees posInit, int i){
 		capaciteMax = capa;
 		position = posInit;
 		destination = new Coordonnees(0, 0);
 		charge = 0;
 		tempsRestant = 0;
+		id = i;
 	}
 	
 	
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
 	public int getCapaciteMax() {
 		return capaciteMax;
 	}

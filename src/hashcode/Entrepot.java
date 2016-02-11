@@ -67,6 +67,8 @@ public class Entrepot extends Emplacement {
 		int j;
 		ArrayList<Commande> classement=new ArrayList<Commande>();
 		int cpt[]=new int[max];
+		for(int k = 0; k<max; k++)
+			cpt[k]=0;
 		for (i=1; i<max; i++){
 		      for (j=0; j<i; j++){
 		    	  if(min[i]>=min[j])
