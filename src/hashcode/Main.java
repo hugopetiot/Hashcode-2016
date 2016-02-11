@@ -71,7 +71,11 @@ public class Main {
 			}
 			
 			for(Entrepot e : lwarehouses){
-				System.out.println(e.);
+				ArrayList<Commande> l = e.honorable(lcommandes);
+				for(Commande c : l){
+					System.out.println(c.getLocation().x +"   "+c.getLocation().y);
+				}
+				System.out.println("\n");
 			}
 			
 			//System.out.println("carre "+sq.getScore());
