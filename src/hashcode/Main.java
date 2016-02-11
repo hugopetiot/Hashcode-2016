@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 
 public class Main {
@@ -18,6 +19,7 @@ public class Main {
 		ArrayList<Entrepot> lwarehouses;
 		ArrayList<Drone> ldrones;
 		ArrayList<Commande> lcommandes;
+		TreeMap<Coordonnees, Emplacement> mapEmplacements = new TreeMap<Coordonnees, Emplacement>();
 		try {
 			String rendu="";
 			//FileWriter fw= new FileWriter(new File("mother_of_all_warehouses.txt"));
@@ -93,5 +95,68 @@ public class Main {
 		long c = System.currentTimeMillis() - cdeb;
 		System.out.println(c);
 	}	
+	
+	
+	public String algoDeLaMuerte(ArrayList<Drone> ldrones, ArrayList<Entrepot> lwarehouses, ArrayList<Commande> lcommandes, int turns){
+		String rendu = "";
+		for(int i=0;i<turns-1;i++){
+			int numDrone = 0;
+			for(Drone d:ldrones){
+				if(d.getTempsRestant() == 0){
+					if(mapEmplacements.get(d.getPosition()) instanceof Entrepot){ //A modifier
+						String renduTemp = "";
+						ArrayList<Commande> com = mapEmplacements.get(d.getPosition()).honorable(lcommandes);
+							int y = 0;
+							while(y < com.get(0).getProduits().size()){
+								if(d.getCapaciteMax() >= d.getCharge()+com.get(0).getProduits().get(y).getWeight()){
+									d.setCharge(d.getCharge()+com.get(0).getProduits().get(y).getWeight());
+									ArrayList<Produit> modifStock =  ((Entrepot)mapEmplacements.get(d.getPosition())).getProduits_disponibles();
+									int z = 0;
+									while(z < modifStock.size() && modifStock.get(z).getId() != com.get(0).getProduits().get(y).getId()){
+										z++;
+									}
+									modifStock.remove(z);
+									((Entrepot)mapEmplacements.get(d.getPosition())).setProduits_disponibles(modifStock);
+									
+									ArrayList<Produit> prod = com.get(0).getProduits();
+									prod.remove(y);
+									com.get(0).setProduits(prod);
+									//print des load
+									d.setTempsRestant(d.getTempsRestant()+1);
+									rendu += d.getId()+" L "+((Entrepot)mapEmplacements.get(d.getPosition())).getId()+" "+com.get(0).getProduits().get(y).getId()+ "1\n";
+									renduTemp += d.getId()+" D "+com.get(0).getId()+" "+com.get(0).getProduits().get(y).getId()+ "1\n";
+								}
+								else{
+									y++;
+								}
+								d.setTempsRestant(d.getPosition().distance(com.get(0).getLocation()));
+							}
+							if(com.get(0).getProduits().isEmpty()){
+								lcommandes.remove(com.get(0));
+							}
+							
+							if(d.getCharge() > 0){
+								rendu += renduTemp;
+							}
+					}
+					else{
+						int min = 999999999;
+						Entrepot entPlusProche = null;
+						for(Entrepot e:lwarehouses){
+							if(e.getLocation().distance(d.getPosition()) < min){
+								min = e.getLocation().distance(d.getPosition());
+								entPlusProche = e;
+							}
+						}
+						rendu += d.getId()+" L "+entPlusProche.getId()+" 0 0\n";
+						//print load rien vers l'entrepot
+					}
+				}
+				else{
+					d.setTempsRestant(d.getTempsRestant()-1);
+				}
+			}
+		}
+	}
 }
 
