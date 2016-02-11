@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class Main {
 
-	static Scanner in = new Scanner(System.in);
+	static Scanner in;
 
 	public static void main(String args[]){
 		long cdeb = System.currentTimeMillis();
@@ -20,10 +20,15 @@ public class Main {
 			//FileWriter fw= new FileWriter(new File("redundancy.txt"));
 			//FileWriter fw= new FileWriter(new File("busy_day.txt"));
 			Locale.setDefault(Locale.ENGLISH);
+			in = new Scanner(new File("mother_of_all_warehouses.in"));
+			//in = new Scanner(new File("redundancy.in"));
+			//in = new Scanner(new File("mbusy_day.in"));
+
 			int nbcom=0;
-			//Dessin dessin = new Dessin(new File("mother_of_all_warehouses.in"));
-			//Dessin dessin = new Dessin(new File("redundancy.in"));
-			//Dessin dessin = new Dessin(new File("busy_day.in"));
+			int rows=in.nextInt(),columns=in.nextInt(),drones=in.nextInt(),turns=in.nextInt(),maxPayload=in.nextInt();
+			
+			
+			
 
 
 
