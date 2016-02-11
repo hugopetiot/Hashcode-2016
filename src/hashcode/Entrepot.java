@@ -17,11 +17,11 @@ public class Entrepot extends Emplacement {
 	public void setProduits_disponibles(ArrayList<Produit> produits_disponibles) {
 		this.produits_disponibles = produits_disponibles;
 	}
-	
+
 	public boolean stockDisponible(Commande c){
 		boolean trouve;
 
-		
+
 		ArrayList<Produit>tmp=(ArrayList<Produit>) produits_disponibles.clone();
 		for(Produit demande : c.getProduits()){ 
 			trouve=false;
@@ -36,11 +36,11 @@ public class Entrepot extends Emplacement {
 			}
 			if(trouve==false)
 				return false;
-			}
-		
+		}
+
 		return true;
 	}
-	
+
 	public ArrayList<Commande> honorable(ArrayList<Commande> commandes){
 		ArrayList<Commande> ret=new ArrayList<Commande>();
 		for(Commande c : commandes){
@@ -49,11 +49,11 @@ public class Entrepot extends Emplacement {
 			}
 		}
 		return minimum(ret);
-		
-		
+
+
 	}
-	
-	
+
+
 	public ArrayList<Commande> minimum(ArrayList<Commande> commande){
 		@SuppressWarnings("unchecked")
 		ArrayList<Commande> l=(ArrayList<Commande>) commande.clone();
@@ -63,25 +63,44 @@ public class Entrepot extends Emplacement {
 			min[i]=location.distance(c.getLocation())*c.poidstotal();
 			i++;
 
-			
+
 		}
 		int max=l.size();
 		int j;
+
 		ArrayList<Commande> classement=new ArrayList<Commande>();
-		int cpt[]=new int[max];
+		int minimum=0;
+		i=0;
+		for(i=0;i<max;i++){
+			//ArrayList<Commande>l1=(ArrayList<>l.clone();
+			minimum=location.distance(l.get(0).getLocation())*l.get(0).poidstotal();
+			int place=0;
+			for(j=1;j<l.size();j++){
+				if(location.distance(l.get(j).getLocation())*l.get(j).poidstotal()<minimum){
+					minimum=location.distance(l.get(j).getLocation())*l.get(j).poidstotal();
+					place=j;
+				}
+
+
+			}
+			classement.add(l.get(place));
+			l.remove(place);
+		}
+
+		/*int cpt[]=new int[max];
 		for(int k = 0; k<max; k++)
 			cpt[k]=0;
 		for (i=1; i<max; i++){
 		      for (j=0; j<i; j++){
-		    	  if(min[i]>=min[j])
+		    	  if(min[i]<=min[j])
 		    		  cpt[i]++;
 		    	  else
 		    		  cpt[j]++;
 		      }
 		    }
-		    for (i=0; i<max; i++) classement.add(l.get(i));
+		    for (i=0; i<max; i++) classement.add(l.get(cpt[i]));*/
 		return classement;
 	}
 
-	
+
 }

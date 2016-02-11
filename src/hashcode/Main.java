@@ -73,7 +73,6 @@ public class Main {
 			for(Entrepot e : lwarehouses){
 				ArrayList<Commande> l = e.honorable(lcommandes);
 				for(Commande c : l){
-					System.out.println(c.getLocation().x +"   "+c.getLocation().y+"    "+c.poidstotal()*e.getLocation().distance(c.getLocation())+"");
 					fw.write(c.getLocation().x +"   "+c.getLocation().y+"    "+c.poidstotal()*e.getLocation().distance(c.getLocation())+"\n");
 				
 				}
