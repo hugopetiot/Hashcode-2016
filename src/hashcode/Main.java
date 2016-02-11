@@ -29,9 +29,9 @@ public class Main {
 			int rows=in.nextInt(),columns=in.nextInt(),drones=in.nextInt(),turns=in.nextInt(),maxPayload=in.nextInt();
 			
 			int nbProduits = in.nextInt();
-			
+			lprods = new ArrayList<Produit>(nbProduits);
 			for(int i = 0; i<nbProduits; i++){
-				
+				lprods.add(new Produit(i,in.nextInt()));
 			}
 			
 
