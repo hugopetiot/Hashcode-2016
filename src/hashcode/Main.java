@@ -15,6 +15,9 @@ public class Main {
 	public static void main(String args[]){
 		long cdeb = System.currentTimeMillis();
 		ArrayList<Produit> lprods;
+		ArrayList<Entrepot> lwarehouses;
+		ArrayList<Drone> ldrones;
+		ArrayList<Commande> lcommandes;
 		try {
 			String rendu="";
 			FileWriter fw= new FileWriter(new File("mother_of_all_warehouses.txt"));
@@ -35,10 +38,38 @@ public class Main {
 			}
 			
 			int nbWarehouses = in.nextInt();
+			lwarehouses = new ArrayList<Entrepot> (nbWarehouses);
 			
+			for(int i = 0; i<nbWarehouses; i++){
+				Entrepot tmp = new Entrepot(in.nextInt(),in.nextInt());
+				ArrayList<Produit> l = tmp.getProduits_disponibles();
+				for(int j = 0; j<nbProduits; j++){
+					int t = in.nextInt();
+					for(int k = 0; k <t; k++){
+						l.add(lprods.get(j));
+					}
+				}
+				tmp.setProduits_disponibles(l);
+				lwarehouses.add(tmp);
+			}
+			
+			
+			ldrones = new ArrayList<Drone>(drones);
+			for(int i=0; i<drones; i++){
+				ldrones.add(new Drone(maxPayload, lwarehouses.get(0).getLocation()));
+			}
 
-
-
+			int nborders = in.nextInt();
+			lcommandes = new ArrayList<Commande>(nborders);
+			for(int i = 0; i <nborders; i++){
+				Commande ordertmp = new Commande(in.nextInt(),in.nextInt());
+				int nbitems = in.nextInt();
+				for(int j = 0; j<nbitems; j++){
+					ordertmp.getProduits().add(lprods.get(in.nextInt()));
+				}
+				lcommandes.add(ordertmp);
+			}
+			
 			//System.out.println("carre "+sq.getScore());
 			//System.out.println("# "+dessin.getHashtag());
 			//System.out.println(dessin.toString());
