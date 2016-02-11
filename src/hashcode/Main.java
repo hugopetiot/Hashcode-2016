@@ -34,6 +34,8 @@ public class Main {
 				lprods.add(new Produit(i,in.nextInt()));
 			}
 			
+			int nbWarehouses = in.nextInt();
+			
 
 
 
