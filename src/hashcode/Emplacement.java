@@ -1,5 +1,5 @@
 package hashcode;
 
-public abstract class Emplacement {
+public abstract class Emplacement{
 	
 }
