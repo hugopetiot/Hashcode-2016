@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Commande extends Emplacement {
 	private ArrayList<Produit> produits;
 	int id;
+	
 	public Commande(int x, int y,int i){
 		produits= new ArrayList<Produit>();
 		location=new Coordonnees(x,y);
@@ -22,6 +23,12 @@ public class Commande extends Emplacement {
 			ret=ret+p.getWeight();
 		}
 		return ret;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	

@@ -105,6 +105,12 @@ public class Entrepot extends Emplacement {
 		    for (i=0; i<max; i++) classement.add(l.get(cpt[i]));*/
 		return classement;
 	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 
 
 }
