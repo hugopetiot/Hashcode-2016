@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.TreeMap;
@@ -19,15 +20,15 @@ public class Main {
 		ArrayList<Entrepot> lwarehouses;
 		ArrayList<Drone> ldrones;
 		ArrayList<Commande> lcommandes;
-		TreeMap<Coordonnees, Emplacement> mapEmplacements = new TreeMap<Coordonnees, Emplacement>();
+		HashMap<Coordonnees, Emplacement> mapEmplacements = new HashMap<Coordonnees, Emplacement>();
 		try {
 			String rendu="";
-			//FileWriter fw= new FileWriter(new File("mother_of_all_warehouses.txt"));
-			FileWriter fw= new FileWriter(new File("redundancy.txt"));
+			FileWriter fw= new FileWriter(new File("mother_of_all_warehouses.txt"));
+			//FileWriter fw= new FileWriter(new File("redundancy.txt"));
 			//FileWriter fw= new FileWriter(new File("busy_day.txt"));
 			Locale.setDefault(Locale.ENGLISH);
-			//in = new Scanner(new File("mother_of_all_warehouses.in"));
-			in = new Scanner(new File("redundancy.in"));
+			in = new Scanner(new File("mother_of_all_warehouses.in"));
+			//in = new Scanner(new File("redundancy.in"));
 			//in = new Scanner(new File("mbusy_day.in"));
 
 			int nbcom=0;
@@ -43,7 +44,11 @@ public class Main {
 			lwarehouses = new ArrayList<Entrepot> (nbWarehouses);
 			
 			for(int i = 0; i<nbWarehouses; i++){
-				Entrepot tmp = new Entrepot(in.nextInt(),in.nextInt(),i);
+				int x, y;
+				x = in.nextInt();
+				y = in.nextInt();
+				Entrepot tmp = new Entrepot(x,y,i);
+				mapEmplacements.put(new Coordonnees(x,y), tmp);
 				ArrayList<Produit> l = tmp.getProduits_disponibles();
 				for(int j = 0; j<nbProduits; j++){
 					int t = in.nextInt();
@@ -80,6 +85,8 @@ public class Main {
 				}
 			}
 			
+			rendu = algoDeLaMuerte(ldrones, lwarehouses, lcommandes, turns, mapEmplacements, fw);
+			
 			//System.out.println("carre "+sq.getScore());
 			//System.out.println("# "+dessin.getHashtag());
 			//System.out.println(dessin.toString());
@@ -97,34 +104,41 @@ public class Main {
 	}	
 	
 	
-	public String algoDeLaMuerte(ArrayList<Drone> ldrones, ArrayList<Entrepot> lwarehouses, ArrayList<Commande> lcommandes, int turns){
+	public static String algoDeLaMuerte(ArrayList<Drone> ldrones, ArrayList<Entrepot> lwarehouses, ArrayList<Commande> lcommandes, int turns, HashMap<Coordonnees, Emplacement> mapEmplacements, FileWriter fw) throws IOException{
 		String rendu = "";
+		int nbCom = 0;
 		for(int i=0;i<turns-1;i++){
+			System.out.println(i);
+			rendu = "";
 			int numDrone = 0;
 			for(Drone d:ldrones){
 				if(d.getTempsRestant() == 0){
-					if(mapEmplacements.get(d.getPosition()) instanceof Entrepot){ //A modifier
+					if(true){ //A modifier
+						//System.out.println("test");
 						String renduTemp = "";
-						ArrayList<Commande> com = mapEmplacements.get(d.getPosition()).honorable(lcommandes);
+						//System.out.println(mapEmplacements.get(d.getPosition()));
+						ArrayList<Commande> com = lwarehouses.get(0).honorable(lcommandes);
 							int y = 0;
 							while(y < com.get(0).getProduits().size()){
 								if(d.getCapaciteMax() >= d.getCharge()+com.get(0).getProduits().get(y).getWeight()){
 									d.setCharge(d.getCharge()+com.get(0).getProduits().get(y).getWeight());
-									ArrayList<Produit> modifStock =  ((Entrepot)mapEmplacements.get(d.getPosition())).getProduits_disponibles();
+									ArrayList<Produit> modifStock =  lwarehouses.get(0).getProduits_disponibles();
 									int z = 0;
 									while(z < modifStock.size() && modifStock.get(z).getId() != com.get(0).getProduits().get(y).getId()){
 										z++;
 									}
 									modifStock.remove(z);
-									((Entrepot)mapEmplacements.get(d.getPosition())).setProduits_disponibles(modifStock);
+									lwarehouses.get(0).setProduits_disponibles(modifStock);
 									
 									ArrayList<Produit> prod = com.get(0).getProduits();
-									prod.remove(y);
-									com.get(0).setProduits(prod);
+						
 									//print des load
 									d.setTempsRestant(d.getTempsRestant()+1);
-									rendu += d.getId()+" L "+((Entrepot)mapEmplacements.get(d.getPosition())).getId()+" "+com.get(0).getProduits().get(y).getId()+ "1\n";
-									renduTemp += d.getId()+" D "+com.get(0).getId()+" "+com.get(0).getProduits().get(y).getId()+ "1\n";
+									rendu += d.getId()+" L "+lwarehouses.get(0).getId()+" "+com.get(0).getProduits().get(y).getId()+ " 1\n";
+									renduTemp += d.getId()+" D "+com.get(0).getId()+" "+com.get(0).getProduits().get(y).getId()+ " 1\n";
+									nbCom += 2;
+									prod.remove(y);
+									com.get(0).setProduits(prod);
 								}
 								else{
 									y++;
@@ -137,6 +151,8 @@ public class Main {
 							
 							if(d.getCharge() > 0){
 								rendu += renduTemp;
+								//System.out.println(rendu);
+								fw.write(rendu);
 							}
 					}
 					else{
@@ -149,7 +165,9 @@ public class Main {
 							}
 						}
 						rendu += d.getId()+" L "+entPlusProche.getId()+" 0 0\n";
+						nbCom++;
 						//print load rien vers l'entrepot
+						fw.write(rendu);
 					}
 				}
 				else{
@@ -157,6 +175,7 @@ public class Main {
 				}
 			}
 		}
+		return nbCom+"\n"+rendu;
 	}
 }
 
